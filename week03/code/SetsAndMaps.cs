@@ -22,7 +22,33 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        HashSet<string> wordsSet = new HashSet<string>(words);
+        List<string> pairs = new List<string>();
+
+        foreach (string word in wordsSet)
+        {
+            char[] wordChars = word.ToCharArray();
+            Array.Reverse(wordChars);
+            string reversedWord = new string(wordChars);
+
+            if (word == reversedWord)
+            {
+                wordsSet.Remove(word);
+                wordsSet.Remove(reversedWord);
+            }
+            
+            if (wordsSet.Contains(reversedWord)) 
+            {
+                string pair = reversedWord + " & " + word; 
+                pairs.Add(pair);
+
+                wordsSet.Remove(word);
+                wordsSet.Remove(reversedWord);
+            } else {
+                wordsSet.Remove(word);
+            }
+        }
+        return pairs.ToArray();
     }
 
     /// <summary>
