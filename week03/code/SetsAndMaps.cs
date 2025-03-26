@@ -99,7 +99,37 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        string word1Lower = word1.ToLower().Replace(" ", "");
+        string word2Lower = word2.ToLower().Replace(" ", "");
+
+        if (word1Lower.Length != word2Lower.Length) 
+            return false;
+
+        var wordMap = new Dictionary<char, int>();
+
+        for (int i = 0; i < word1Lower.Length; i++)
+        {
+            if (!wordMap.ContainsKey(word1Lower[i])) 
+                wordMap.Add(word1Lower[i], 0);
+
+            wordMap[word1Lower[i]] += 1;
+        }
+
+        for (int i = 0; i < word2Lower.Length; i++)
+        {
+            if (!wordMap.ContainsKey(word2Lower[i]) || wordMap[word2Lower[i]] == 0)
+                return false;
+    
+            wordMap[word2Lower[i]]--;
+        }
+    
+        int acc = 0;
+        foreach (var key in wordMap)
+        {
+            acc += key.Value;
+        }
+
+        return acc == 0;
     }
 
     /// <summary>
